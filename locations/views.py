@@ -1,0 +1,12 @@
+from rest_framework import viewsets, permissions
+from .models import Location
+from .serializers import LocationSerializer
+
+class IsAdminOrStaff(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and (request.user.user_type == 'admin' or request.user.user_type == 'staff')
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    permission_classes = [IsAdminOrStaff]
