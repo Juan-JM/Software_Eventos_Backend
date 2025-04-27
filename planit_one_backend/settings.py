@@ -162,10 +162,10 @@ SIMPLE_JWT = {
 # Al final del archivo para la bitácora
 AUDITLOG_INCLUDE_ADMIN_MODEL_ACTIONS = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','Direccion_del_servidor_otorgada_por_railway']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','https://softwareeventosbackend-production.up.railway.app/']
 
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-CSRF_TRUSTED_ORIGINS=['http://*','Direccion_del_servidor_otorgada_por_railway']
+CSRF_TRUSTED_ORIGINS=['http://*','https://softwareeventosbackend-production.up.railway.app/']
