@@ -15,7 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$k0m&rnyf9wua_=@37aaouf3m9w5s)zu)*joz89glas47!_!&i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','softwareeventosbackend-production.up.railway.app']
 
 
 # Application definition
@@ -159,8 +160,6 @@ SIMPLE_JWT = {
 
 # Al final del archivo para la bitácora
 AUDITLOG_INCLUDE_ADMIN_MODEL_ACTIONS = True
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','https://softwareeventosbackend-production.up.railway.app/']
 
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
