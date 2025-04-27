@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'auditlog', #para la bitácora
     'audit',
     'services',
+    'locations',
     'django_extensions',
 ]
 
