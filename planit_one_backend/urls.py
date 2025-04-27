@@ -11,5 +11,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/users/', include('users.urls')),
     # Añadir la URL para la bitácora
+    path('api/services/', include('services.urls')),  # Agregar esta línea
     path('api/audit/', include('audit.urls')),
 ]
