@@ -12,4 +12,3 @@ class LocationViewSet(AuditModelMixin, viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     permission_classes = [IsAdminOrStaff]
-    # Por defecto usará 'name' como campo identificador y el nombre del modelo es detectado automáticamente

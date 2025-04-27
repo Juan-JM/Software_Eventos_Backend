@@ -12,4 +12,3 @@ class ServiceViewSet(AuditModelMixin, viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
     permission_classes = [IsAdminOrStaff]
-    # Por defecto usará 'name' como campo identificador y el nombre del modelo es detectado automáticamente
