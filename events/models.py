@@ -1,6 +1,7 @@
 from django.db import models
 from services.models import Service
 from locations.models import Location
+from companies.models import Company
 
 class Event(models.Model):
     STATUS_CHOICES = (
@@ -20,6 +21,7 @@ class Event(models.Model):
     image = models.URLField(max_length=500, null=True, blank=True)  # URL en vez de archivo
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='events')
+
     def __str__(self):
         return self.name

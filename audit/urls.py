@@ -7,7 +7,7 @@ from .views import  AuditLogViewSet  # Elimina AuditLogViewSet si no creaste el 
 router = DefaultRouter()
 # router.register('logs', LogEntryViewSet, basename='logs')
 # Si creaste el modelo personalizado:
-router.register('audit', AuditLogViewSet, basename='audit')
+router.register('', AuditLogViewSet, basename='audit')
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -30,9 +30,9 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = [
             'id', 'name', 'description', 'start_date', 'end_date',
-            'location', 'location_id',  # location (read) y location_id (write)
-            'services', 'service_ids',  # services (read) y service_ids (write)
+            'location', 'location_id',
+            'services', 'service_ids',
             'status', 'image',
-            'created_at', 'updated_at'
+            'created_at', 'updated_at', 'company'  # <- Añadido aquí
         ]
-        read_only_fields = ('created_at', 'updated_at')
+        read_only_fields = ('created_at', 'updated_at', 'company')

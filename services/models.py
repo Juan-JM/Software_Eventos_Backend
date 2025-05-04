@@ -1,5 +1,5 @@
 from django.db import models
-
+from companies.models import Company 
 class Service(models.Model):
     UNIT_CHOICES = (
         ('event', 'Por Evento'),
@@ -8,7 +8,7 @@ class Service(models.Model):
         ('day', 'Por Día'),
         ('unit', 'Por Unidad'),
     )
-    
+    company = models.ForeignKey(Company,on_delete=models.CASCADE,related_name='services')
     name = models.CharField(max_length=100)
     description = models.TextField()
     base_price = models.DecimalField(max_digits=10, decimal_places=2)
