@@ -15,4 +15,5 @@ urlpatterns = [
     path('api/locations/', include('locations.urls')),  # Agregar esta línea
     path('api/audit/', include('audit.urls')),
     path('api/events/', include('events.urls')),
+    path('api/companies/', include('companies.urls')),
 ]

@@ -5,23 +5,47 @@ from rest_framework.decorators import action
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, UserCreateSerializer
 from audit.models import AuditLog  # Importar el modelo AuditLog
-
+from rest_framework.permissions import BasePermission
 User = get_user_model()
 
-class IsAdminOrSelf(permissions.BasePermission):
+
+class IsSuperAdminOrCompanyAdmin(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and (
+            request.user.is_superadmin() or request.user.is_company_admin()
+        )
+    from rest_framework.permissions import BasePermission
+
+class IsAdminOrSelf(BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj == request.user or request.user.is_admin()
+        return request.user.is_authenticated and (
+            request.user.is_superadmin() or
+            request.user.is_company_admin() or
+            obj == request.user  # permite ver/modificar su propio perfil
+        )
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superadmin():
+            return User.objects.all()
+        return User.objects.filter(company=user.company)
+    # def get_permissions(self):
+    #     if self.action == 'create':
+    #         return [permissions.AllowAny()]
+    #     elif self.action in ['update', 'partial_update', 'destroy', 'retrieve', 'me']:
+    #         return [IsAdminOrSelf()]
+    #     return [permissions.IsAdminUser()]
     def get_permissions(self):
-        if self.action == 'create':
-            return [permissions.AllowAny()]
-        elif self.action in ['update', 'partial_update', 'destroy', 'retrieve', 'me']:
-            return [IsAdminOrSelf()]
-        return [permissions.IsAdminUser()]
+       if self.action == 'create':
+        return [permissions.AllowAny()]
+       elif self.action in ['update', 'partial_update', 'destroy', 'retrieve', 'me']:
+        return [IsAdminOrSelf()]
+       elif self.action == 'list':
+        return [IsSuperAdminOrCompanyAdmin()]
+       return [permissions.IsAuthenticated()]
     
     def get_serializer_class(self):
         if self.action == 'create':
@@ -29,17 +53,25 @@ class UserViewSet(viewsets.ModelViewSet):
         return UserSerializer
     
     def perform_create(self, serializer):
-        """Sobrescribe el método para registrar la creación en la bitácora"""
-        user = serializer.save()
+        current_user = self.request.user
+
+        if current_user.is_superadmin():
+            user = serializer.save(user_type='superadmin')  # forza rol superadmin
+        elif current_user.is_company_admin():
+            user = serializer.save(company=current_user.company)
+        else:
+            user = serializer.save()  # fallback (no recomendado si solo superadmin/admin pueden crear)
+
         # Registrar en la bitácora
         AuditLog.objects.create(
-            user=self.request.user if self.request.user.is_authenticated else None,
+            user=current_user,
             action='CREATE',
             model='User',
             object_id=str(user.id),
             detail=f"Usuario '{user.username}' creado",
             ip_address=self.request.META.get('REMOTE_ADDR')
         )
+
     
     def perform_update(self, serializer):
         """Sobrescribe el método para registrar la actualización en la bitácora"""
