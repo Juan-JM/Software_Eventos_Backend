@@ -53,22 +53,25 @@ class UserViewSet(viewsets.ModelViewSet):
         return UserSerializer
     
     def perform_create(self, serializer):
-        # Si es superadmin, puede asignar cualquier empresa (ej. en el panel del superadmin)
-        # Pero si es un admin de empresa, forzamos su propia empresa
-        if self.request.user.is_company_admin():
-            user = serializer.save(company=self.request.user.company)
+        current_user = self.request.user
+
+        if current_user.is_superadmin():
+            user = serializer.save(user_type='superadmin')  # forza rol superadmin
+        elif current_user.is_company_admin():
+            user = serializer.save(company=current_user.company)
         else:
-            user = serializer.save()
+            user = serializer.save()  # fallback (no recomendado si solo superadmin/admin pueden crear)
 
         # Registrar en la bitácora
         AuditLog.objects.create(
-            user=self.request.user if self.request.user.is_authenticated else None,
+            user=current_user,
             action='CREATE',
             model='User',
             object_id=str(user.id),
             detail=f"Usuario '{user.username}' creado",
             ip_address=self.request.META.get('REMOTE_ADDR')
         )
+
     
     def perform_update(self, serializer):
         """Sobrescribe el método para registrar la actualización en la bitácora"""
