@@ -23,7 +23,6 @@ class GenerateBackupView(APIView):
     permission_classes = [IsAdmin]
 
     def post(self, request):
-        # Crear nombre del archivo
         timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
         filename = f'backup_{timestamp}.sql'
         backup_dir = os.path.join(settings.BASE_DIR, 'backups')
