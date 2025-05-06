@@ -1,0 +1,26 @@
+Requiero integrar a mi software saas de "eventos" la suscripcion en la cual, una compañia puede pagar un plan mensual o anual para poder usar el servicio que ofrecemos. se debe implementar la pasarela de pago stripe. te explico como tengo visualizado el flujo de como se realizara una suscripcion(si me equivoco en algo o quieres recomendarme algo antes de empezar puedes hacerlo por favor y a partir de las opciones que me des empiezas a implementarlo): en principio el dueño de la empresa se registra en la plataforma, al registrarse ingresa los datos de su empresa y se crea un usuario "admin.nombre_empresa" el cual puede ver todas las funcionalidades del software, mas no, interactuar con nada, ejemplo: no puede crear, modificar usuarios, eventos, localicaciones, etc. a menos que se suscriba a un plan(aqui viene lo que quiero implementar), el usuario ingresa a la pagina de suscripcion y elije el plan al que quiere suscribirse, "1 mes" o "1 año", entonces se redigira a la pagina de pago e introducira los datos de su tarjeta y procedera a realizar el pago mediante la pasarela de stripe, esta suscripcion registrara a la compañia que pertenece este usuario admin, por lo cual una o muchas sucripciones estara ligado a una sola compañia, despues de que el usuario se suscriba recien podra interactuar con las funciones del software agregar, editar o eliminar la informacion que le pertenezca a su empresa. si ya tuvo una suscripcion solo puede ver la informacion que almacena sobre su empresa, pero no puede hacer nada mas que ver(esto ultimo pienso manejarlo en el frontend de manera que si hay una suscripcion activa para la compañia, puede interactuar con el software, sino, se redijira a la pagina de suscripcion y debera suscribirse. por lo que puedes ignorar esto para la implementacion en el backend, a menos que me recomiendes otras opciones). 
+en fin, si algo no quedo claro me lo puedes decir.
+antes de empezar a implentar algo dame las sugerencias o recomendaciones para que las pueda tomar en cuenta y elejir que se implementara.
+El bakend esta desarollado en django, y requiero que sea api restful. te adjunto el codigo que creo sera necesario para implementar todo
+
+Modelo de datos:
+
+Crear un modelo Subscription que se relacione con la compañía
+esta bien.
+Crear un modelo Plan para definir los diferentes planes disponibles (mensual/anual)
+sera posible que subscription y plan sean uno solo? ya que el plan solo podra ser "1 mes", "6 meses", "1 año".
+Almacenar IDs de cliente y suscripción de Stripe para seguimiento
+esto solo es para registro, cierto? el unico que podra suscribir a su empresa sera el admin de la empresa, los demas usuarios que el admin cree para su empresa no pueden suscribirse.
+
+Control de acceso:
+
+Implementar un permiso personalizado que verifique si la compañía tiene una suscripción activa
+Usar este permiso en todas las vistas que requieran suscripción activa
+esto lo queria manejar en el frontend react, que verifique si la compañia a la que pertenece un usuario(admin o cualquier usuario que haya creado el admin para que acceda a la informacion de su empresa) tiene una sucripcion activa
+
+Flujo de suscripción:
+
+Crear endpoints para: listar planes, iniciar suscripción, confirmar pago, cancelar suscripción
+estoy deacuerdo, pero, los planes pueden unirse al modelo de suscripcion por favor, y sin implementacion de webhooks por favor
+
+tambien ayudame a crear el frontend para añadir el boton suscripcion al header(solo si es adnin), la vista de suscripcion con los diferentes planes, la vista para el chekout y que se vaya al dashboard despues de un pago exitoso

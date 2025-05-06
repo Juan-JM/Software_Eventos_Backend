@@ -1,6 +1,10 @@
+# /compaies/serializers
 from rest_framework import serializers
 from .models import Company
 from users.models import User
+from audit.models import AuditLog
+
+
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
@@ -30,12 +34,25 @@ class CompanyCreateWithAdminSerializer(serializers.ModelSerializer):
 
         company = Company.objects.create(**validated_data)
 
-        User.objects.create_user(
+        # Crear el usuario administrador
+        admin_user = User.objects.create_user(
             username=username,
             email=email,
             password=password,
             user_type='admin',
             company=company
         )
-
+        
+        # Registrar manualmente la creación del usuario en la bitácora
+        request = self.context.get('request')
+        user = request.user if request and hasattr(request, 'user') and request.user.is_authenticated else None
+        
+        AuditLog.objects.create(
+            user=user,
+            action='CREATE',
+            model='User',
+            object_id=str(admin_user.id),
+            detail=f"Usuario '{username}' creado como administrador de compañía '{company.name}'",
+            ip_address=request.META.get('REMOTE_ADDR') if request else None
+        )
         return company
