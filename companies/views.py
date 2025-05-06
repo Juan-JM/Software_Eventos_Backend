@@ -22,5 +22,5 @@ class CompanyViewSet(AuditModelMixin,viewsets.ModelViewSet):
         user = self.request.user
         if not user.is_superadmin():
             raise PermissionDenied("Solo el superadmin puede crear compañías.")
-        super().perform_create(serializer)
+        # super().perform_create(serializer)
         serializer.save()
