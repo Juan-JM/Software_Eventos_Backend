@@ -19,6 +19,10 @@ DEBUG = True
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app',]
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
+# Para descargar los backups
+MEDIA_URL = '/backups/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'backups')
+
 
 # Application definition
 
@@ -187,3 +191,8 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
     'http://localhost:3000,http://127.0.0.1:8000'
 ).split(',')
+
+# Configuración de Stripe
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', '')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')

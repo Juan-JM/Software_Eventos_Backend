@@ -4,6 +4,9 @@ from django.contrib import admin
 from django.urls import path, include
 from users.token import CustomTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
+# Rodrigo 
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,4 +20,5 @@ urlpatterns = [
     path('api/events/', include('events.urls')),
     path('api/companies/', include('companies.urls')),
     path('api/subscriptions/', include('subscriptions.urls')),
-]
+    path('api/backup/', include('backup.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
