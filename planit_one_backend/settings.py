@@ -1,5 +1,4 @@
 import os
-
 import dj_database_url
 from dotenv import load_dotenv
 load_dotenv()
@@ -17,8 +16,8 @@ SECRET_KEY = 'django-insecure-$k0m&rnyf9wua_=@37aaouf3m9w5s)zu)*joz89glas47!_!&i
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', '.railway.app',]
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app',]
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 
 # Application definition
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'events',
     'companies',
+    'subscriptions',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'subscriptions.middleware.SubscriptionRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'planit_one_backend.urls'

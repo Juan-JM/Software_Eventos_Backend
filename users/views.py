@@ -6,6 +6,8 @@ from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, UserCreateSerializer
 from audit.models import AuditLog  # Importar el modelo AuditLog
 from rest_framework.permissions import BasePermission
+from audit.mixins import AuditModelMixin
+
 User = get_user_model()
 
 
@@ -24,7 +26,7 @@ class IsAdminOrSelf(BasePermission):
             obj == request.user  # permite ver/modificar su propio perfil
         )
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(AuditModelMixin,viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     def get_queryset(self):
