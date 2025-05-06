@@ -18,5 +18,5 @@ class ServiceViewSet(AuditModelMixin, viewsets.ModelViewSet):
         return Service.objects.filter(company=user.company)
 
     def perform_create(self, serializer):
-        super().perform_create(serializer)
         serializer.save(company=self.request.user.company)
+        super().perform_create(serializer)

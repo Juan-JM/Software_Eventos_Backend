@@ -20,5 +20,6 @@ class EventViewSet(AuditModelMixin,viewsets.ModelViewSet):
         return Event.objects.filter(company=user.company)
 
     def perform_create(self, serializer):
-        super().perform_create(serializer)
         serializer.save(company=self.request.user.company)
+        super().perform_create(serializer)
+
