@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'companies',
     'subscriptions',
     'backup',
+    'packages',
 ]
 
 MIDDLEWARE = [
