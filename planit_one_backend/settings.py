@@ -92,7 +92,8 @@ WSGI_APPLICATION = 'planit_one_backend.wsgi.application'
 #Servidor Railway
 DATABASES ={
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-    }
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
