@@ -36,3 +36,29 @@ class EventSerializer(serializers.ModelSerializer):
             'created_at', 'updated_at', 'company'  # <- Añadido aquí
         ]
         read_only_fields = ('created_at', 'updated_at', 'company')
+
+    def validate(self, data):
+            location = data['location']
+            start = data['start_date']
+            end = data['end_date']
+
+            event_id = self.instance.id if self.instance else None
+
+            # Verificar solapamiento en esa locación y empresa
+            overlapping_events = Event.objects.filter(
+                location=location,
+                start_date__lt=end,
+                end_date__gt=start
+            ).exclude(id=event_id)
+
+            if overlapping_events.exists():
+                raise serializers.ValidationError(
+                    "Ya existe un evento programado en esta locación para esas fechas."
+                )
+
+            # Validar que la locación pertenezca a la misma empresa del usuario
+            request = self.context.get('request')
+            if request and request.user.company != location.company:
+                raise serializers.ValidationError("No puedes usar una locación de otra empresa.")
+
+            return data
