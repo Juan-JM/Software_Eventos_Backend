@@ -22,6 +22,7 @@ urlpatterns = [
     path('api/subscriptions/', include('subscriptions.urls')),
     path('api/backup/', include('backup.urls')),
     path('api/packages/', include('packages.urls')),
+    path('api/sales/', include('sales.urls')),
     path('api/staff/', include('staff.urls')),        # Nueva ruta
     path('api/tasks/', include('tasks.urls')),        # Nueva ruta
 
