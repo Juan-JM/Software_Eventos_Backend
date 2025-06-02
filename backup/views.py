@@ -20,9 +20,9 @@ class BackupViewSet(AuditModelMixin, viewsets.ModelViewSet):
     serializer_class = BackupSerializer
     permission_classes = [IsAdmin]
 
-class GenerateBackupViewSet(APIView):
-    #permissions_classes = [IsAdmin]
-    permission_classes = [IsAdmin]
+class GenerateBackupView(APIView):
+    permissions_classes = [IsAdmin]
+
 
     def post(self, request):
         pg_host = os.getenv("DB_HOST")
