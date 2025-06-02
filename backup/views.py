@@ -1,13 +1,14 @@
+import psycopg2
 import os
-import datetime
-from subprocess import Popen, PIPE
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, permissions, viewsets
+from datetime import datetime
 from .models import Backup
 from .serializers import BackupSerializer 
-from django.conf import settings
 from audit.mixins import AuditModelMixin  
+from rest_framework import status, permissions, viewsets 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.conf import settings
+
 
 # Create your views here.
 class IsAdmin(permissions.BasePermission):
@@ -19,44 +20,84 @@ class BackupViewSet(AuditModelMixin, viewsets.ModelViewSet):
     serializer_class = BackupSerializer
     permission_classes = [IsAdmin]
 
-class GenerateBackupView(APIView):
+class GenerateBackupViewSet(APIView):
+    #permissions_classes = [IsAdmin]
     permission_classes = [IsAdmin]
 
     def post(self, request):
-        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        pg_host = os.getenv("DB_HOST")
+        pg_port = os.getenv("DB_PORT")
+        pg_name = os.getenv("DB_NAME")
+        pg_user = os.getenv("DB_USER")
+        pg_password = os.getenv("DB_PASSWORD")
+
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         filename = f'backup_{timestamp}.sql'
         backup_dir = os.path.join(settings.BASE_DIR, 'backups')
         os.makedirs(backup_dir, exist_ok=True)
         backup_path = os.path.join(backup_dir, filename)
 
-        pg_user = os.getenv("PGUSER")
-        pg_password = os.getenv("PGPASSWORD")  
-        pg_db = os.getenv("PGDATABASE")
+        try:
+            conn = psycopg2.connect(
+                host=pg_host,
+                port=pg_port,
+                dbname=pg_name,
+                user=pg_user,
+                password=pg_password
+            )
+            conn.autocommit = True
+            cursor = conn.cursor()
 
-        pg_dump_path = os.getenv("PG_DUMP_PATH")
+            cursor.execute("SELECT tablename FROM pg_tables WHERE schemaname = 'public';")
+            tables = cursor.fetchall()
 
-        command = [
-            pg_dump_path,
-            '-U', pg_user,
-            '-d', pg_db,
-            '-f', backup_path
-        ]
+            with open(backup_path, 'w') as f:
 
-        env = os.environ.copy()
-        env["PGPASSWORD"] = pg_password
+                f.write(f"-- Backup de la base de datos creada el {datetime.now()}\n\n")
 
-        process = Popen(command, env=env, stdout=PIPE, stderr=PIPE)
-        stdout, stderr = process.communicate()
+                for table in tables:
+                    table_name = table[0]
+                    f.write(f"-- Table {table_name}\n")
 
-        if process.returncode == 0:
+                    cursor.execute(f"SELECT column_name, data_type FROM information_schema.columns WHERE table_name = '{table_name}';")
+                    columns = cursor.fetchall()
+
+                    f.write(f"CREATE TABLE IF NOT EXISTS {table_name} (\n")
+                    column_defs = []
+
+                    for col in columns:
+                        column_defs.append(f"  {col[0]} {col[1]}")
+                    f.write(",\n".join(column_defs))
+                    f.write("\n) \n\n")
+
+                    cursor.execute(f"SELECT * FROM {table_name};")
+                    rows = cursor.fetchall()
+
+                    for row in rows:
+                        values = []
+
+                        for val in row:
+                            if val is None:
+                                values.append("NULL")
+                            elif isinstance(val, str):
+                                values.append(f"'{val.replace('\'', '\'\'')}'")
+                            else:
+                                values.append(str(val))
+
+                        f.write(f"INSERT INTO {table_name} VALUES ({', '.join(values)});\n")
+                
+                    f.write("\n")
+
             backup = Backup.objects.create(
                 file_name=filename,
                 backup_type='manual'
-            )
+            ) 
+
             serializer = BackupSerializer(backup)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response({
-                'error': 'Backup failed',
-                'details': stderr.decode()
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        except Exception as e:
+            print(f" Error: {e}")
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                        
+

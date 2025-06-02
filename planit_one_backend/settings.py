@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'companies',
     'subscriptions',
     'backup',
+    'packages',
 ]
 
 MIDDLEWARE = [
@@ -95,29 +96,20 @@ WSGI_APPLICATION = 'planit_one_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 #Servidor Railway
-# DATABASES ={
-#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-#     }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-    }
+DATABASES ={
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'planit_one_db',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',  # Cambia esto por tu contraseña
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': os.getenv('DB_NAME'),
+#        'USER': os.getenv('DB_USER'),
+#        'PASSWORD': os.getenv('DB_PASSWORD'),
+#        'HOST': os.getenv('DB_HOST'),
+#        'PORT': os.getenv('DB_PORT'),
+#    }
+#}
 
 # Configuración de CORS para permitir solicitudes desde el frontend
 CORS_ALLOW_ALL_ORIGINS = True  # En producción, limitar a dominios específicos
