@@ -16,8 +16,8 @@ SECRET_KEY = 'django-insecure-$k0m&rnyf9wua_=@37aaouf3m9w5s)zu)*joz89glas47!_!&i
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app',]
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app', '192.168.0.13']
+#ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 # Para descargar los backups
 MEDIA_URL = '/backups/'
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'companies',
     'subscriptions',
     'backup',
+    'sales',
 ]
 
 MIDDLEWARE = [
@@ -90,20 +91,20 @@ WSGI_APPLICATION = 'planit_one_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 #Servidor Railway
-DATABASES ={
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-}
+# DATABASES ={
+#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+# }
 
-#DATABASES = {
-#    'default': {
-#       'ENGINE': 'django.db.backends.postgresql',
-#       'NAME': os.getenv('DB_NAME'),
-#       'USER': os.getenv('DB_USER'),
-#       'PASSWORD': os.getenv('DB_PASSWORD'),
-#       'HOST': os.getenv('DB_HOST'),
-#       'PORT': os.getenv('DB_PORT'),
-#   }
-#}
+DATABASES = {
+   'default': {
+      'ENGINE': 'django.db.backends.postgresql',
+      'NAME': os.getenv('DB_NAME'),
+      'USER': os.getenv('DB_USER'),
+      'PASSWORD': os.getenv('DB_PASSWORD'),
+      'HOST': os.getenv('DB_HOST'),
+      'PORT': os.getenv('DB_PORT'),
+  }
+}
 
 # DATABASES = {
 #     'default': {
