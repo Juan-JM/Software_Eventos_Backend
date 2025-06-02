@@ -19,10 +19,13 @@ DEBUG = True
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app',]
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
-# Para descargar los backups
-MEDIA_URL = '/backups/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'backups')
+# Configuración unificada de archivos media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Rutas específicas dentro de media
+BACKUP_ROOT = os.path.join(MEDIA_ROOT, 'backups')
+STAFF_PHOTOS_ROOT = os.path.join(MEDIA_ROOT, 'staff_photos')
 
 # Application definition
 
@@ -49,6 +52,8 @@ INSTALLED_APPS = [
     'subscriptions',
     'backup',
     'packages',
+    'staff',        # Nueva app
+    'tasks',        # Nueva app
 ]
 
 MIDDLEWARE = [
