@@ -23,14 +23,15 @@ class BackupViewSet(AuditModelMixin, viewsets.ModelViewSet):
 class GenerateBackupView(APIView):
     permissions_classes = [IsAdmin]
 
-    def post(self, request):
-        pg_host = os.getenv("PGHOST")
-        pg_port = os.getenv("PGPORT")
-        pg_name = os.getenv("PGDATABASE")
-        pg_user = os.getenv("PGUSER")
-        pg_password = os.getenv("PGPASSWORD")
 
-        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+    def post(self, request):
+        pg_host = os.getenv("DB_HOST")
+        pg_port = os.getenv("DB_PORT")
+        pg_name = os.getenv("DB_NAME")
+        pg_user = os.getenv("DB_USER")
+        pg_password = os.getenv("DB_PASSWORD")
+
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         filename = f'backup_{timestamp}.sql'
         backup_dir = os.path.join(settings.BASE_DIR, 'backups')
         os.makedirs(backup_dir, exist_ok=True)
@@ -40,7 +41,7 @@ class GenerateBackupView(APIView):
             conn = psycopg2.connect(
                 host=pg_host,
                 port=pg_port,
-                name=pg_name,
+                dbname=pg_name,
                 user=pg_user,
                 password=pg_password
             )
@@ -96,7 +97,7 @@ class GenerateBackupView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            print(" Error: {e}")
+            print(f" Error: {e}")
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                         
 

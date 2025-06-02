@@ -17,7 +17,12 @@ SECRET_KEY = 'django-insecure-$k0m&rnyf9wua_=@37aaouf3m9w5s)zu)*joz89glas47!_!&i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app',]
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS' ,'127.0.0.1,localhost').split(',')
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost,192.168.0.4').split(',')
+# Sustituye la línea que tenía getenv(...) por esta lista fija:
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.4']
+
+
 
 # Configuración unificada de archivos media
 MEDIA_URL = '/media/'
@@ -100,27 +105,16 @@ DATABASES ={
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('DB_NAME'),
-#         'USER': os.getenv('DB_USER'),
-#         'PASSWORD': os.getenv('DB_PASSWORD'),
-#         'HOST': os.getenv('DB_HOST'),
-#         'PORT': os.getenv('DB_PORT'),
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'planit_one_db',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',  # Cambia esto por tu contraseña
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': os.getenv('DB_NAME'),
+#        'USER': os.getenv('DB_USER'),
+#        'PASSWORD': os.getenv('DB_PASSWORD'),
+#        'HOST': os.getenv('DB_HOST'),
+#        'PORT': os.getenv('DB_PORT'),
+#    }
+#}
 
 # Configuración de CORS para permitir solicitudes desde el frontend
 CORS_ALLOW_ALL_ORIGINS = True  # En producción, limitar a dominios específicos
