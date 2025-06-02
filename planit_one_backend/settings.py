@@ -17,7 +17,12 @@ SECRET_KEY = 'django-insecure-$k0m&rnyf9wua_=@37aaouf3m9w5s)zu)*joz89glas47!_!&i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app',]
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS' ,'127.0.0.1,localhost').split(',')
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost,192.168.0.4').split(',')
+# Sustituye la línea que tenía getenv(...) por esta lista fija:
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.4']
+
+
 
 # Para descargar los backups
 MEDIA_URL = '/backups/'
