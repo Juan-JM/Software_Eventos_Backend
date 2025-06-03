@@ -20,7 +20,7 @@ class BackupViewSet(AuditModelMixin, viewsets.ModelViewSet):
     serializer_class = BackupSerializer
     permission_classes = [IsAdmin]
 
-class BackupViewSet(APIView):
+class GenerateBackupView(APIView):
     permissions_classes = [IsAdmin]
 
     def post(self, request):
