@@ -1,4 +1,4 @@
--- Backup de la base de datos creada el 2025-06-02 20:36:05.372252
+-- Backup de la base de datos creada el 2025-06-03 00:33:25.782955
 
 -- Table django_migrations
 CREATE TABLE IF NOT EXISTS django_migrations (
@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS django_migrations (
   app character varying,
   name character varying,
   applied timestamp with time zone
-) 
+);
 
 INSERT INTO django_migrations VALUES (1, 'contenttypes', '0001_initial', 2025-04-16 23:17:52.080286-04:00);
 INSERT INTO django_migrations VALUES (2, 'contenttypes', '0002_remove_content_type_name', 2025-04-16 23:17:52.091472-04:00);
@@ -67,13 +67,14 @@ INSERT INTO django_migrations VALUES (56, 'events', '0003_event_is_package_event
 INSERT INTO django_migrations VALUES (57, 'sales', '0001_initial', 2025-06-02 20:12:13.576607-04:00);
 INSERT INTO django_migrations VALUES (58, 'staff', '0001_initial', 2025-06-02 20:12:13.602306-04:00);
 INSERT INTO django_migrations VALUES (59, 'tasks', '0001_initial', 2025-06-02 20:12:13.638328-04:00);
+INSERT INTO django_migrations VALUES (60, 'schedules', '0001_initial', 2025-06-02 23:58:19.320248-04:00);
 
 -- Table django_content_type
 CREATE TABLE IF NOT EXISTS django_content_type (
   id integer,
   app_label character varying,
   model character varying
-) 
+);
 
 INSERT INTO django_content_type VALUES (1, 'admin', 'logentry');
 INSERT INTO django_content_type VALUES (2, 'auth', 'permission');
@@ -98,6 +99,8 @@ INSERT INTO django_content_type VALUES (20, 'sales', 'detallenotaventa');
 INSERT INTO django_content_type VALUES (21, 'sales', 'notaventa');
 INSERT INTO django_content_type VALUES (22, 'staff', 'staff');
 INSERT INTO django_content_type VALUES (23, 'tasks', 'task');
+INSERT INTO django_content_type VALUES (24, 'schedules', 'schedule');
+INSERT INTO django_content_type VALUES (25, 'schedules', 'activity');
 
 -- Table auth_permission
 CREATE TABLE IF NOT EXISTS auth_permission (
@@ -105,7 +108,7 @@ CREATE TABLE IF NOT EXISTS auth_permission (
   name character varying,
   content_type_id integer,
   codename character varying
-) 
+);
 
 INSERT INTO auth_permission VALUES (1, 'Can add log entry', 1, 'add_logentry');
 INSERT INTO auth_permission VALUES (2, 'Can change log entry', 1, 'change_logentry');
@@ -159,10 +162,10 @@ INSERT INTO auth_permission VALUES (49, 'Can add service', 13, 'add_service');
 INSERT INTO auth_permission VALUES (50, 'Can change service', 13, 'change_service');
 INSERT INTO auth_permission VALUES (51, 'Can delete service', 13, 'delete_service');
 INSERT INTO auth_permission VALUES (52, 'Can view service', 13, 'view_service');
-INSERT INTO auth_permission VALUES (53, 'Can add Locaci�n', 14, 'add_location');
-INSERT INTO auth_permission VALUES (54, 'Can change Locaci�n', 14, 'change_location');
-INSERT INTO auth_permission VALUES (55, 'Can delete Locaci�n', 14, 'delete_location');
-INSERT INTO auth_permission VALUES (56, 'Can view Locaci�n', 14, 'view_location');
+INSERT INTO auth_permission VALUES (53, 'Can add Locación', 14, 'add_location');
+INSERT INTO auth_permission VALUES (54, 'Can change Locación', 14, 'change_location');
+INSERT INTO auth_permission VALUES (55, 'Can delete Locación', 14, 'delete_location');
+INSERT INTO auth_permission VALUES (56, 'Can view Locación', 14, 'view_location');
 INSERT INTO auth_permission VALUES (57, 'Can add event', 15, 'add_event');
 INSERT INTO auth_permission VALUES (58, 'Can change event', 15, 'change_event');
 INSERT INTO auth_permission VALUES (59, 'Can delete event', 15, 'delete_event');
@@ -199,12 +202,20 @@ INSERT INTO auth_permission VALUES (89, 'Can add Tarea', 23, 'add_task');
 INSERT INTO auth_permission VALUES (90, 'Can change Tarea', 23, 'change_task');
 INSERT INTO auth_permission VALUES (91, 'Can delete Tarea', 23, 'delete_task');
 INSERT INTO auth_permission VALUES (92, 'Can view Tarea', 23, 'view_task');
+INSERT INTO auth_permission VALUES (93, 'Can add Cronograma', 24, 'add_schedule');
+INSERT INTO auth_permission VALUES (94, 'Can change Cronograma', 24, 'change_schedule');
+INSERT INTO auth_permission VALUES (95, 'Can delete Cronograma', 24, 'delete_schedule');
+INSERT INTO auth_permission VALUES (96, 'Can view Cronograma', 24, 'view_schedule');
+INSERT INTO auth_permission VALUES (97, 'Can add Actividad', 25, 'add_activity');
+INSERT INTO auth_permission VALUES (98, 'Can change Actividad', 25, 'change_activity');
+INSERT INTO auth_permission VALUES (99, 'Can delete Actividad', 25, 'delete_activity');
+INSERT INTO auth_permission VALUES (100, 'Can view Actividad', 25, 'view_activity');
 
 -- Table auth_group
 CREATE TABLE IF NOT EXISTS auth_group (
   id integer,
   name character varying
-) 
+);
 
 INSERT INTO auth_group VALUES (1, 'Cliente');
 INSERT INTO auth_group VALUES (2, 'Administrador');
@@ -214,7 +225,7 @@ CREATE TABLE IF NOT EXISTS auth_group_permissions (
   id bigint,
   group_id integer,
   permission_id integer
-) 
+);
 
 INSERT INTO auth_group_permissions VALUES (1, 2, 1);
 INSERT INTO auth_group_permissions VALUES (2, 2, 2);
@@ -282,7 +293,7 @@ CREATE TABLE IF NOT EXISTS auth_user (
   phone character varying,
   address text,
   company_id bigint
-) 
+);
 
 INSERT INTO auth_user VALUES (12, 'pbkdf2_sha256$1000000$ONrhe8ujwcU8WWbMHdxUHy$w/4Vv720WQSPUWOGX0/s7v8U1T3kekUXO+3gvgmFZ3o=', NULL, False, 'admin.saona', '', '', 'saona@admin.com', False, True, 2025-05-04 18:06:57.338223-04:00, 'admin', NULL, NULL, 1);
 INSERT INTO auth_user VALUES (13, 'pbkdf2_sha256$1000000$DoShJZx18uxFWALaNpqVRL$vkGFCy/9lR0E6N2fe7ulp5i6zezhsP47cT4D+KfMUNw=', NULL, False, 'admin.arboliana', '', '', 'arboliana@admin.com', False, True, 2025-05-04 18:11:53.287966-04:00, 'admin', NULL, NULL, 2);
@@ -295,7 +306,7 @@ CREATE TABLE IF NOT EXISTS auth_user_groups (
   id bigint,
   user_id bigint,
   group_id integer
-) 
+);
 
 
 -- Table auth_user_user_permissions
@@ -303,7 +314,7 @@ CREATE TABLE IF NOT EXISTS auth_user_user_permissions (
   id bigint,
   user_id bigint,
   permission_id integer
-) 
+);
 
 
 -- Table django_admin_log
@@ -316,7 +327,7 @@ CREATE TABLE IF NOT EXISTS django_admin_log (
   change_message text,
   content_type_id integer,
   user_id bigint
-) 
+);
 
 
 -- Table auditlog_logentry
@@ -335,7 +346,7 @@ CREATE TABLE IF NOT EXISTS auditlog_logentry (
   serialized_data jsonb,
   cid character varying,
   changes_text text
-) 
+);
 
 INSERT INTO auditlog_logentry VALUES (1, '1', 1, 'admin', 0, {'id': ['None', '1'], 'email': ['None', 'admin@admin.com'], 'is_staff': ['None', 'True'], 'password': ['None', 'pbkdf2_sha256$1000000$L4Bpf8MI5V5pXhFqHPvKkw$IzguVLy4D5REq6td46dE8TZKAk5hjFs/nJY4OwC4wA0='], 'username': ['None', 'admin'], 'is_active': ['None', 'True'], 'last_name': ['None', ''], 'user_type': ['None', 'customer'], 'first_name': ['None', ''], 'date_joined': ['None', '2025-04-17 03:18:44.836801'], 'is_superuser': ['None', 'True']}, 2025-04-16 23:18:45.306995-04:00, NULL, 6, NULL, NULL, NULL, NULL, '');
 INSERT INTO auditlog_logentry VALUES (2, '1', 1, 'admin', 1, {'last_login': ['None', '2025-04-17 03:21:27.229360']}, 2025-04-16 23:21:27.237199-04:00, NULL, 6, NULL, NULL, NULL, NULL, '');
@@ -382,11 +393,11 @@ INSERT INTO auditlog_logentry VALUES (41, '16', 16, 'pruebas', 0, {'id': ['None'
 INSERT INTO auditlog_logentry VALUES (42, '1', 1, 'admin', 1, {'last_login': ['None', '2025-05-06 03:51:58.972146']}, 2025-05-05 23:51:58.982821-04:00, NULL, 6, NULL, NULL, NULL, NULL, '');
 INSERT INTO auditlog_logentry VALUES (44, '7', 7, 'Servicio de Catering', 0, {'id': ['None', '7'], 'name': ['None', 'Servicio de Catering'], 'company': ['None', '1'], 'provider': ['None', 'Pollo Kikys'], 'base_price': ['None', '30.00'], 'created_at': ['None', '2025-05-19 18:29:24.205914'], 'updated_at': ['None', '2025-05-19 18:29:24.205943'], 'description': ['None', 'Servicios de Comida'], 'unit_measure': ['None', 'person']}, 2025-05-19 14:29:24.221511-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
 INSERT INTO auditlog_logentry VALUES (45, '7', 7, 'Servicio de Catering', 1, {'provider': ['Pollo Kikys', 'Kikys']}, 2025-05-19 14:29:36.233538-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
-INSERT INTO auditlog_logentry VALUES (46, '8', 8, 'Servicio de Musica Quincea�os', 0, {'id': ['None', '8'], 'name': ['None', 'Servicio de Musica Quincea�os'], 'company': ['None', '1'], 'provider': ['None', 'Mariachis'], 'base_price': ['None', '200.00'], 'created_at': ['None', '2025-05-19 23:19:35.136899'], 'updated_at': ['None', '2025-05-19 23:19:35.136917'], 'description': ['None', 'Musica en vivo para una fiesta de quincea�os'], 'unit_measure': ['None', 'hour']}, 2025-05-19 19:19:35.141049-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
-INSERT INTO auditlog_logentry VALUES (47, '9', 9, 'Planificaci�n y coordinaci�n de eventos', 0, {'id': ['None', '9'], 'name': ['None', 'Planificaci�n y coordinaci�n de eventos'], 'company': ['None', '1'], 'provider': ['None', 'Due�o'], 'base_price': ['None', '100.00'], 'created_at': ['None', '2025-05-19 23:24:18.435626'], 'updated_at': ['None', '2025-05-19 23:24:18.435638'], 'description': ['None', 'Servicio integral que abarca la organizaci�n del evento de principio a fin, incluyendo cronograma, log�stica, coordinaci�n de proveedores y supervisi�n el d�a del evento.'], 'unit_measure': ['None', 'event']}, 2025-05-19 19:24:18.439930-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
-INSERT INTO auditlog_logentry VALUES (48, '10', 10, 'Animaci�n y entretenimiento', 0, {'id': ['None', '10'], 'name': ['None', 'Animaci�n y entretenimiento'], 'company': ['None', '1'], 'provider': ['None', 'Proveedorx'], 'base_price': ['None', '150.00'], 'created_at': ['None', '2025-05-19 23:27:13.389128'], 'updated_at': ['None', '2025-05-19 23:27:13.389148'], 'description': ['None', 'Contrataci�n de animadores, presentadores, DJs, bandas musicales, artistas, bailarines, shows tem�ticos, comediantes, etc.'], 'unit_measure': ['None', 'event']}, 2025-05-19 19:27:13.395116-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
-INSERT INTO auditlog_logentry VALUES (49, '11', 11, 'Decoraci�n y ambientaci�n', 0, {'id': ['None', '11'], 'name': ['None', 'Decoraci�n y ambientaci�n'], 'company': ['None', '1'], 'provider': ['None', 'Proveedor X'], 'base_price': ['None', '100.00'], 'created_at': ['None', '2025-05-19 23:27:38.605745'], 'updated_at': ['None', '2025-05-19 23:27:38.605764'], 'description': ['None', 'Dise�o y montaje de decoraciones tem�ticas o personalizadas: centros de mesa, backdrops, flores, globos, iluminaci�n ambiental, etc.'], 'unit_measure': ['None', 'event']}, 2025-05-19 19:27:38.610106-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
-INSERT INTO auditlog_logentry VALUES (50, '12', 12, 'Fotograf�a y video', 0, {'id': ['None', '12'], 'name': ['None', 'Fotograf�a y video'], 'company': ['None', '1'], 'provider': ['None', 'Proveedor X'], 'base_price': ['None', '50.00'], 'created_at': ['None', '2025-05-19 23:28:20.027969'], 'updated_at': ['None', '2025-05-19 23:28:20.027991'], 'description': ['None', 'Cobertura visual profesional del evento con c�maras, drones, edici�n y entrega digital o impresa.'], 'unit_measure': ['None', 'unit']}, 2025-05-19 19:28:20.030395-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
+INSERT INTO auditlog_logentry VALUES (46, '8', 8, 'Servicio de Musica Quinceaños', 0, {'id': ['None', '8'], 'name': ['None', 'Servicio de Musica Quinceaños'], 'company': ['None', '1'], 'provider': ['None', 'Mariachis'], 'base_price': ['None', '200.00'], 'created_at': ['None', '2025-05-19 23:19:35.136899'], 'updated_at': ['None', '2025-05-19 23:19:35.136917'], 'description': ['None', 'Musica en vivo para una fiesta de quinceaños'], 'unit_measure': ['None', 'hour']}, 2025-05-19 19:19:35.141049-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
+INSERT INTO auditlog_logentry VALUES (47, '9', 9, 'Planificación y coordinación de eventos', 0, {'id': ['None', '9'], 'name': ['None', 'Planificación y coordinación de eventos'], 'company': ['None', '1'], 'provider': ['None', 'Dueño'], 'base_price': ['None', '100.00'], 'created_at': ['None', '2025-05-19 23:24:18.435626'], 'updated_at': ['None', '2025-05-19 23:24:18.435638'], 'description': ['None', 'Servicio integral que abarca la organización del evento de principio a fin, incluyendo cronograma, logística, coordinación de proveedores y supervisión el día del evento.'], 'unit_measure': ['None', 'event']}, 2025-05-19 19:24:18.439930-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
+INSERT INTO auditlog_logentry VALUES (48, '10', 10, 'Animación y entretenimiento', 0, {'id': ['None', '10'], 'name': ['None', 'Animación y entretenimiento'], 'company': ['None', '1'], 'provider': ['None', 'Proveedorx'], 'base_price': ['None', '150.00'], 'created_at': ['None', '2025-05-19 23:27:13.389128'], 'updated_at': ['None', '2025-05-19 23:27:13.389148'], 'description': ['None', 'Contratación de animadores, presentadores, DJs, bandas musicales, artistas, bailarines, shows temáticos, comediantes, etc.'], 'unit_measure': ['None', 'event']}, 2025-05-19 19:27:13.395116-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
+INSERT INTO auditlog_logentry VALUES (49, '11', 11, 'Decoración y ambientación', 0, {'id': ['None', '11'], 'name': ['None', 'Decoración y ambientación'], 'company': ['None', '1'], 'provider': ['None', 'Proveedor X'], 'base_price': ['None', '100.00'], 'created_at': ['None', '2025-05-19 23:27:38.605745'], 'updated_at': ['None', '2025-05-19 23:27:38.605764'], 'description': ['None', 'Diseño y montaje de decoraciones temáticas o personalizadas: centros de mesa, backdrops, flores, globos, iluminación ambiental, etc.'], 'unit_measure': ['None', 'event']}, 2025-05-19 19:27:38.610106-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
+INSERT INTO auditlog_logentry VALUES (50, '12', 12, 'Fotografía y video', 0, {'id': ['None', '12'], 'name': ['None', 'Fotografía y video'], 'company': ['None', '1'], 'provider': ['None', 'Proveedor X'], 'base_price': ['None', '50.00'], 'created_at': ['None', '2025-05-19 23:28:20.027969'], 'updated_at': ['None', '2025-05-19 23:28:20.027991'], 'description': ['None', 'Cobertura visual profesional del evento con cámaras, drones, edición y entrega digital o impresa.'], 'unit_measure': ['None', 'unit']}, 2025-05-19 19:28:20.030395-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
 INSERT INTO auditlog_logentry VALUES (51, '6', 6, 'qwe', 2, {'id': ['6', 'None'], 'name': ['qwe', 'None'], 'company': ['1', 'None'], 'provider': ['qwe1', 'None'], 'base_price': ['123.00', 'None'], 'created_at': ['2025-05-06 09:57:03.029199', 'None'], 'updated_at': ['2025-05-06 09:57:03.029213', 'None'], 'description': ['qwe', 'None'], 'unit_measure': ['hour', 'None'], 'standard_duration': ['123', 'None']}, 2025-05-19 19:28:24.522467-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
 INSERT INTO auditlog_logentry VALUES (52, '1', 1, 'admin', 1, {'last_login': ['2025-05-06 03:51:58.972146', '2025-05-20 04:00:53.819464']}, 2025-05-20 00:00:53.830794-04:00, NULL, 6, NULL, NULL, NULL, NULL, '');
 INSERT INTO auditlog_logentry VALUES (53, '13', 13, 'asd', 0, {'id': ['None', '13'], 'name': ['None', 'asd'], 'company': ['None', '1'], 'provider': ['None', 'x'], 'base_price': ['None', '12.00'], 'created_at': ['None', '2025-05-20 04:12:13.127390'], 'updated_at': ['None', '2025-05-20 04:12:13.127414'], 'description': ['None', 'asd'], 'unit_measure': ['None', 'hour'], 'standard_duration': ['None', '123']}, 2025-05-20 00:12:13.155471-04:00, NULL, 13, NULL, NULL, NULL, NULL, '');
@@ -397,7 +408,7 @@ CREATE TABLE IF NOT EXISTS django_session (
   session_key character varying,
   session_data text,
   expire_date timestamp with time zone
-) 
+);
 
 INSERT INTO django_session VALUES ('y8ejmznoobopousxfn3tcyrjopq5mhvn', '.eJxVjDsOwjAQBe_iGlnr764o6TmD5c8GB5AjxUkVcXcSKQW0b2beJkJclxrWznMYi7gKJS6_W4r5xe0A5RnbY5J5ass8Jnko8qRd3qfC79vp_h3U2OteQzTWJjLak_cKgGwxg0M1IKJLJQIwJ9ZIyiAaYmZFDjDvYs5We_H5ArBtNrQ:1u5Fod:aGcby8lU3tpYU30zR-iZryNgm4jbOcEaJMx7fCQGw24', 2025-04-30 23:21:27.242477-04:00);
 INSERT INTO django_session VALUES ('e341m07wzfjdrb38uq35hw871qtwm19m', '.eJxVjDsOwjAQBe_iGlnr764o6TmD5c8GB5AjxUkVcXcSKQW0b2beJkJclxrWznMYi7gKJS6_W4r5xe0A5RnbY5J5ass8Jnko8qRd3qfC79vp_h3U2OteQzTWJjLak_cKgGwxg0M1IKJLJQIwJ9ZIyiAaYmZFDjDvYs5We_H5ArBtNrQ:1u5NZv:FuiFj-NphsjC33yTs7JggZMh4pBdGmjDsYZjrRaT4v0', 2025-05-01 07:38:47.774840-04:00);
@@ -409,7 +420,7 @@ CREATE TABLE IF NOT EXISTS events_event_services (
   id bigint,
   event_id bigint,
   service_id bigint
-) 
+);
 
 
 -- Table audit_auditlog
@@ -422,34 +433,362 @@ CREATE TABLE IF NOT EXISTS audit_auditlog (
   detail text,
   ip_address inet,
   user_id bigint
-) 
+);
 
-INSERT INTO audit_auditlog VALUES (72, 2025-05-04 18:42:03.539493-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin"', '127.0.0.1', 1);
-INSERT INTO audit_auditlog VALUES (31, 2025-04-27 17:21:24.372272-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (32, 2025-04-27 17:21:28.525337-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (33, 2025-04-27 17:21:28.526312-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (34, 2025-04-27 17:22:45.986351-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (35, 2025-04-27 17:22:54.732493-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (36, 2025-04-27 17:22:54.736510-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (43, 2025-04-27 17:28:02.347236-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (44, 2025-04-27 17:28:10.306874-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (45, 2025-04-27 17:28:10.307832-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (48, 2025-04-27 17:42:48.950918-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (49, 2025-04-27 17:42:55.389792-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario clientechad', '127.0.0.1', NULL);
-INSERT INTO audit_auditlog VALUES (74, 2025-05-04 18:43:53.097995-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (72, 2025-05-04 18:42:03.539493-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (31, 2025-04-27 17:21:24.372272-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (32, 2025-04-27 17:21:28.525337-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (33, 2025-04-27 17:21:28.526312-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (34, 2025-04-27 17:22:45.986351-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (35, 2025-04-27 17:22:54.732493-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (36, 2025-04-27 17:22:54.736510-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (43, 2025-04-27 17:28:02.347236-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (44, 2025-04-27 17:28:10.306874-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (45, 2025-04-27 17:28:10.307832-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (48, 2025-04-27 17:42:48.950918-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (49, 2025-04-27 17:42:55.389792-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario clientechad', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (74, 2025-05-04 18:43:53.097995-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', 1);
 INSERT INTO audit_auditlog VALUES (76, 2025-05-04 18:49:06.781925-04:00, 'DELETE', 'Service', '4', 'Service ''asd'' eliminado', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (78, 2025-05-05 14:47:57.122526-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin"', '127.0.0.1', 1);
-INSERT INTO audit_auditlog VALUES (80, 2025-05-05 14:48:06.259968-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (82, 2025-05-05 18:46:05.496406-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (84, 2025-05-06 00:08:00.976752-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario "admin"', '127.0.0.1', 1);
-INSERT INTO audit_auditlog VALUES (86, 2025-05-06 00:53:55.424231-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (88, 2025-05-06 01:06:16.071919-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin"', '127.0.0.1', 1);
-INSERT INTO audit_auditlog VALUES (90, 2025-05-06 01:08:08.876296-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (92, 2025-05-06 03:42:04.155412-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario "admin"', '127.0.0.1', 1);
-INSERT INTO audit_auditlog VALUES (94, 2025-05-06 04:07:31.632473-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (96, 2025-05-06 05:21:31.381950-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (98, 2025-05-06 05:56:40.829109-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (100, 2025-05-06 05:59:10.572783-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
-INSERT INTO audit_auditlog VALUES (102, 2025-05-19 14:02:45.781313-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin"', '127.0.0.1', 1);
-INSERT INTO audit_auditlog VALUES (103, 2025-05-19 14:03:02.470898-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesi�n del usuario "admin"', '127.0.0.1', 1);
-INSERT INTO audit_auditlog VALUES (104, 2025-05-19 14:03:09.078225-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesi�n del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (78, 2025-05-05 14:47:57.122526-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (80, 2025-05-05 14:48:06.259968-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (82, 2025-05-05 18:46:05.496406-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (84, 2025-05-06 00:08:00.976752-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (86, 2025-05-06 00:53:55.424231-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (88, 2025-05-06 01:06:16.071919-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (90, 2025-05-06 01:08:08.876296-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (92, 2025-05-06 03:42:04.155412-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (94, 2025-05-06 04:07:31.632473-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (96, 2025-05-06 05:21:31.381950-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (98, 2025-05-06 05:56:40.829109-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (100, 2025-05-06 05:59:10.572783-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (102, 2025-05-19 14:02:45.781313-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (103, 2025-05-19 14:03:02.470898-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (104, 2025-05-19 14:03:09.078225-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (105, 2025-05-19 14:29:36.247971-04:00, 'UPDATE', 'Service', '7', 'Service ''Servicio de Catering'' actualizado. Cambios: provider: Pollo Kikys → Kikys', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (106, 2025-05-19 19:17:43.458367-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (107, 2025-05-19 19:28:24.510123-04:00, 'DELETE', 'Service', '6', 'Service ''qwe'' eliminado', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (108, 2025-05-19 20:17:25.563406-04:00, 'UPDATE', 'Event', '3', 'Event ''qwe'' actualizado. Cambios: ', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (109, 2025-05-19 20:18:02.009778-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (110, 2025-05-19 20:35:48.427924-04:00, 'UPDATE', 'Package', '1', 'Package ''Paquete Quinceaños2'' actualizado. Cambios: name: Paquete Quinceaños → Paquete Quinceaños2', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (111, 2025-05-19 21:00:38.858821-04:00, 'DELETE', 'Package', '3', 'Package ''asd'' eliminado', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (112, 2025-05-20 01:18:37.792104-04:00, 'DELETE', 'Package', '4', 'Package ''asd'' eliminado', '192.168.100.146', 12);
+INSERT INTO audit_auditlog VALUES (113, 2025-05-20 01:38:21.378948-04:00, 'DELETE', 'Service', '13', 'Service ''asd'' eliminado', '192.168.100.146', 12);
+INSERT INTO audit_auditlog VALUES (114, 2025-05-20 01:43:46.821192-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (115, 2025-05-20 01:57:00.553971-04:00, 'UPDATE', 'Package', '5', 'Package ''prueba'' actualizado. Cambios: ', '192.168.100.146', 12);
+INSERT INTO audit_auditlog VALUES (116, 2025-05-20 02:58:38.070881-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (117, 2025-05-20 03:00:13.573680-04:00, 'UPDATE', 'Event', '3', 'Event ''Boda'' actualizado. Cambios: name: qwe → Boda, is_package: False → True, package: None → Paquete Boda', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (118, 2025-05-20 03:01:18.743475-04:00, 'UPDATE', 'Event', '3', 'Event ''Boda'' actualizado. Cambios: description: qwe → asd', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (119, 2025-05-20 03:04:25.025947-04:00, 'DELETE', 'Location', '3', 'Location ''qwe'' eliminado', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (120, 2025-05-20 03:49:28.914383-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (121, 2025-05-20 03:49:36.267348-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (122, 2025-06-02 20:12:53.960094-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (123, 2025-06-02 20:13:02.551087-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (124, 2025-06-02 20:13:08.925714-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (125, 2025-06-02 21:16:00.354455-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (126, 2025-06-02 23:57:08.443061-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (1, 2025-04-17 00:11:47.033072-04:00, 'CREATE', 'User', '8', 'Usuario ''cliente1111'' creado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (2, 2025-04-17 00:30:58.685073-04:00, 'CREATE', 'User', '9', 'Usuario ''cliente231'' creado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (4, 2025-04-17 01:13:40.833426-04:00, 'UPDATE', 'User', '3', 'Usuario ''clientzzzzz'' actualizado. Cambios: username: cliente2 → clientzzzzz', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (5, 2025-04-17 03:20:57.793948-04:00, 'CREATE', 'User', '11', 'Usuario ''Cliente_nuevo'' creado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (8, 2025-04-17 03:21:33.556562-04:00, 'DELETE', 'User', '5', 'Usuario ''cliente4'' eliminado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (10, 2025-04-17 03:21:45.263629-04:00, 'DELETE', 'User', '6', 'Usuario ''cliente6'' eliminado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (12, 2025-04-17 03:22:56.416376-04:00, 'UPDATE', 'User', '11', 'Usuario ''Cliente_nuevo'' actualizado. Cambios: tipo: customer → staff', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (13, 2025-04-26 22:16:49.234098-04:00, 'UPDATE', 'User', '3', 'Usuario ''clientechad'' actualizado. Cambios: username: clientzzzzz → clientechad, email: pla@ma.com → plass@ma.com', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (14, 2025-04-27 16:37:33.107729-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (15, 2025-04-27 16:38:55.242036-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (16, 2025-04-27 16:42:04.006467-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (17, 2025-04-27 16:46:56.409552-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (18, 2025-04-27 16:52:53.280783-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (19, 2025-04-27 16:52:56.905007-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (20, 2025-04-27 16:52:56.908288-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (21, 2025-04-27 16:53:06.226919-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (22, 2025-04-27 17:11:46.439492-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (23, 2025-04-27 17:11:46.441240-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (24, 2025-04-27 17:12:51.190628-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (25, 2025-04-27 17:14:29.291457-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (26, 2025-04-27 17:14:38.680424-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (27, 2025-04-27 17:14:38.683930-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (28, 2025-04-27 17:16:31.310269-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (29, 2025-04-27 17:21:14.859281-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (30, 2025-04-27 17:21:14.860629-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (37, 2025-04-27 17:23:03.296345-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (38, 2025-04-27 17:23:03.301140-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (39, 2025-04-27 17:23:07.812812-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (40, 2025-04-27 17:23:18.962307-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (41, 2025-04-27 17:23:18.962908-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (42, 2025-04-27 17:23:24.685854-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (46, 2025-04-27 17:42:25.088737-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (47, 2025-04-27 17:42:37.393280-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario admin', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (50, 2025-04-27 19:33:09.880258-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (51, 2025-04-27 19:33:14.584387-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (52, 2025-04-27 19:45:44.995632-04:00, 'CREATE', 'Service', '3', 'Service ''123'' creado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (53, 2025-04-27 19:47:35.098733-04:00, 'DELETE', 'Service', '2', 'Service ''asd'' eliminado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (54, 2025-04-27 19:47:54.159994-04:00, 'UPDATE', 'Service', '3', 'Service ''qwe'' actualizado. Cambios: name: 123 → qwe, description: 123 → csd, base_price: 123.00 → 321.00, standard_duration: 123 → 12', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (55, 2025-04-27 19:50:53.716153-04:00, 'DELETE', 'Location', '1', 'Location ''asd'' eliminado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (56, 2025-04-28 23:59:48.141142-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (57, 2025-04-29 00:00:47.236325-04:00, 'CREATE', 'Location', '2', 'Location ''asd'' creado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (58, 2025-04-29 00:01:38.030087-04:00, 'CREATE', 'Event', '1', 'Event ''asd'' creado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (59, 2025-04-29 08:55:44.161269-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (60, 2025-04-29 20:11:06.275619-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (61, 2025-04-29 20:12:37.131752-04:00, 'CREATE', 'Event', '2', 'Event ''asd'' creado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (62, 2025-04-29 20:12:44.954892-04:00, 'UPDATE', 'Event', '1', 'Event ''asd'' actualizado. Cambios: ', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (63, 2025-05-04 18:03:35.982995-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (64, 2025-05-04 18:03:46.019977-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (65, 2025-05-04 18:10:53.860781-04:00, 'UPDATE', 'Company', '1', 'Company ''SaonaSRL'' actualizado. Cambios: name: Saona → SaonaSRL', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (66, 2025-05-04 18:36:52.647531-04:00, 'CREATE', 'User', '15', 'Usuario ''admin.prueba'' creado como administrador de compañía ''Prueba''', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (67, 2025-05-04 18:36:52.649185-04:00, 'CREATE', 'Company', '4', 'Company ''Prueba'' creado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (68, 2025-05-04 18:38:59.979451-04:00, 'DELETE', 'User', '10', 'Usuario ''cliente1233'' eliminado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (69, 2025-05-04 18:39:04.896347-04:00, 'DELETE', 'User', '7', 'Usuario ''cliente11'' eliminado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (70, 2025-05-04 18:39:07.461934-04:00, 'DELETE', 'User', '11', 'Usuario ''Cliente_nuevo'' eliminado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (71, 2025-05-04 18:39:09.828809-04:00, 'DELETE', 'User', '1', 'Usuario ''admin'' eliminado', '127.0.0.1', NULL);
+INSERT INTO audit_auditlog VALUES (73, 2025-05-04 18:42:16.748427-04:00, 'DELETE', 'User', '3', 'Usuario ''clientechad'' eliminado', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (75, 2025-05-04 18:44:16.005558-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (77, 2025-05-04 18:51:32.526310-04:00, 'CREATE', 'User', '16', 'Usuario ''pruebas'' creado', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (79, 2025-05-05 14:47:59.282822-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (81, 2025-05-05 17:44:23.462779-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (83, 2025-05-06 00:07:53.990052-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (85, 2025-05-06 00:08:13.681636-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (87, 2025-05-06 00:54:00.780436-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (89, 2025-05-06 01:08:00.941178-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (91, 2025-05-06 03:41:01.916602-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin"', '127.0.0.1', 1);
+INSERT INTO audit_auditlog VALUES (93, 2025-05-06 03:42:10.285455-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (95, 2025-05-06 04:07:43.735826-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (97, 2025-05-06 05:55:53.769943-04:00, 'LOGOUT', 'Auth', NULL, 'Cierre de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (99, 2025-05-06 05:58:21.539994-04:00, 'CREATE', 'Location', '3', 'Location ''qwe'' creado', '127.0.0.1', 12);
+INSERT INTO audit_auditlog VALUES (101, 2025-05-06 05:59:18.470068-04:00, 'LOGIN', 'Auth', NULL, 'Inicio de sesión del usuario "admin.saona"', '127.0.0.1', 12);
+
+-- Table companies_company
+CREATE TABLE IF NOT EXISTS companies_company (
+  id bigint,
+  name character varying,
+  description text,
+  website character varying,
+  logo_url character varying,
+  is_active boolean,
+  created_at timestamp with time zone
+);
+
+INSERT INTO companies_company VALUES (1, 'SaonaSRL', 'Saona Club House salon de eventos Santa Cruz', '', '', True, 2025-05-04 18:06:57.335020-04:00);
+INSERT INTO companies_company VALUES (2, 'ARBOLIANA', 'ARBOLIANA EVENTOS', '', '', True, 2025-05-04 18:11:53.283826-04:00);
+INSERT INTO companies_company VALUES (4, 'Prueba', 'pruebas', 'sss', 'sss', True, 2025-05-04 18:36:52.158818-04:00);
+
+-- Table subscriptions_subscription
+CREATE TABLE IF NOT EXISTS subscriptions_subscription (
+  id bigint,
+  plan_type character varying,
+  status character varying,
+  stripe_customer_id character varying,
+  stripe_subscription_id character varying,
+  start_date timestamp with time zone,
+  end_date timestamp with time zone,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  company_id bigint
+);
+
+INSERT INTO subscriptions_subscription VALUES (2, 'monthly', 'active', 'cus_SG9kef1kMhjo0p', 'sub_1RLdQrA3VhVRZlE95XK3IhWx', 2025-05-06 00:48:42.514285-04:00, 2025-06-05 00:48:42.514285-04:00, 2025-05-06 00:48:42.514619-04:00, 2025-05-06 00:48:42.514623-04:00, 1);
+INSERT INTO subscriptions_subscription VALUES (3, 'monthly', 'active', 'cus_SG96WttRADChL0', 'sub_1RLcogA3VhVRZlE9YBHTFDNE', 2025-05-06 01:08:33.331660-04:00, 2025-06-05 01:08:33.331660-04:00, 2025-05-06 01:08:33.332063-04:00, 2025-05-06 01:08:33.332070-04:00, 1);
+INSERT INTO subscriptions_subscription VALUES (4, 'biannual', 'active', 'cus_SG96WttRADChL0', 'sub_1RLeDhA3VhVRZlE9KcfcpRdf', 2025-05-06 01:39:11.241019-04:00, 2025-11-02 01:39:11.241019-04:00, 2025-05-06 01:39:11.241293-04:00, 2025-05-06 01:39:11.241297-04:00, 1);
+
+-- Table locations_location
+CREATE TABLE IF NOT EXISTS locations_location (
+  id bigint,
+  name character varying,
+  description text,
+  address text,
+  capacity integer,
+  location_type character varying,
+  rental_price numeric,
+  price_unit character varying,
+  area_sqm integer,
+  parking_spaces integer,
+  environment_type character varying,
+  extra_hour_cost numeric,
+  provider character varying,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  company_id bigint
+);
+
+INSERT INTO locations_location VALUES (4, 'Sucursal Sur', 'ideal para bodas, cumpleaños y aniversarios', 'av santos dumont', 150, 'salon', 1000.00, 'event', 200, 50, 'cerrado', 100.00, 'Proveedor XYZ', 2025-05-20 03:04:05.359930-04:00, 2025-05-20 03:04:05.359958-04:00, 1);
+INSERT INTO locations_location VALUES (5, 'Sucursal Norte', 'Ideal para Graduaciones y Promociones', 'Las Brisas', 200, 'salon', 1500.00, 'event', 300, 100, 'cerrado', 50.00, 'Proveedor XYZ', 2025-05-20 03:05:49.241159-04:00, 2025-05-20 03:05:49.241171-04:00, 1);
+
+-- Table services_service
+CREATE TABLE IF NOT EXISTS services_service (
+  id bigint,
+  name character varying,
+  description text,
+  base_price numeric,
+  unit_measure character varying,
+  standard_duration integer,
+  provider character varying,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  company_id bigint
+);
+
+INSERT INTO services_service VALUES (7, 'Servicio de Catering', 'Servicios de Comida', 30.00, 'person', NULL, 'Kikys', 2025-05-19 14:29:24.205914-04:00, 2025-05-19 14:29:36.240051-04:00, 1);
+INSERT INTO services_service VALUES (8, 'Servicio de Musica Quinceaños', 'Musica en vivo para una fiesta de quinceaños', 200.00, 'hour', NULL, 'Mariachis', 2025-05-19 19:19:35.136899-04:00, 2025-05-19 19:19:35.136917-04:00, 1);
+INSERT INTO services_service VALUES (9, 'Planificación y coordinación de eventos', 'Servicio integral que abarca la organización del evento de principio a fin, incluyendo cronograma, logística, coordinación de proveedores y supervisión el día del evento.', 100.00, 'event', NULL, 'Dueño', 2025-05-19 19:24:18.435626-04:00, 2025-05-19 19:24:18.435638-04:00, 1);
+INSERT INTO services_service VALUES (10, 'Animación y entretenimiento', 'Contratación de animadores, presentadores, DJs, bandas musicales, artistas, bailarines, shows temáticos, comediantes, etc.', 150.00, 'event', NULL, 'Proveedorx', 2025-05-19 19:27:13.389128-04:00, 2025-05-19 19:27:13.389148-04:00, 1);
+INSERT INTO services_service VALUES (11, 'Decoración y ambientación', 'Diseño y montaje de decoraciones temáticas o personalizadas: centros de mesa, backdrops, flores, globos, iluminación ambiental, etc.', 100.00, 'event', NULL, 'Proveedor X', 2025-05-19 19:27:38.605745-04:00, 2025-05-19 19:27:38.605764-04:00, 1);
+INSERT INTO services_service VALUES (12, 'Fotografía y video', 'Cobertura visual profesional del evento con cámaras, drones, edición y entrega digital o impresa.', 50.00, 'unit', NULL, 'Proveedor X', 2025-05-19 19:28:20.027969-04:00, 2025-05-19 19:28:20.027991-04:00, 1);
+
+-- Table backup_backup
+CREATE TABLE IF NOT EXISTS backup_backup (
+  id bigint,
+  file_name character varying,
+  backup_type character varying,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone
+);
+
+INSERT INTO backup_backup VALUES (1, 'backup_20250519_204259.sql', 'manual', 2025-05-19 20:43:00.672992-04:00, 2025-05-19 20:43:00.673008-04:00);
+INSERT INTO backup_backup VALUES (2, 'backup_20250603_002645.sql', 'manual', 2025-06-03 00:26:45.456616-04:00, 2025-06-03 00:26:45.456635-04:00);
+
+-- Table packages_package
+CREATE TABLE IF NOT EXISTS packages_package (
+  id bigint,
+  name character varying,
+  description text,
+  image character varying,
+  company_id bigint
+);
+
+INSERT INTO packages_package VALUES (1, 'Paquete Quinceaños2', 'Servicios esenciales para una fiesta de quinceaños', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmF3Biaii2qOJ7jWK6TjPDfnBWYw8dveupew&s', 1);
+INSERT INTO packages_package VALUES (2, 'Paquete Boda', 'Servicios para una boda', '', 1);
+INSERT INTO packages_package VALUES (5, 'prueba', 'prueba', '', 1);
+
+-- Table packages_package_services
+CREATE TABLE IF NOT EXISTS packages_package_services (
+  id bigint,
+  package_id bigint,
+  service_id bigint
+);
+
+INSERT INTO packages_package_services VALUES (1, 1, 8);
+INSERT INTO packages_package_services VALUES (2, 1, 12);
+INSERT INTO packages_package_services VALUES (3, 1, 7);
+INSERT INTO packages_package_services VALUES (4, 2, 9);
+INSERT INTO packages_package_services VALUES (5, 2, 11);
+INSERT INTO packages_package_services VALUES (6, 2, 12);
+INSERT INTO packages_package_services VALUES (7, 2, 7);
+INSERT INTO packages_package_services VALUES (13, 5, 7);
+INSERT INTO packages_package_services VALUES (16, 5, 11);
+INSERT INTO packages_package_services VALUES (17, 5, 12);
+
+-- Table events_event
+CREATE TABLE IF NOT EXISTS events_event (
+  id bigint,
+  name character varying,
+  description text,
+  start_date timestamp with time zone,
+  end_date timestamp with time zone,
+  status character varying,
+  image character varying,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  location_id bigint,
+  company_id bigint,
+  is_package boolean,
+  package_id bigint
+);
+
+INSERT INTO events_event VALUES (4, 'Boda', 'Boda Cristiana', 2025-05-31 08:00:00-04:00, 2025-05-31 20:00:00-04:00, 'scheduled', '', 2025-05-20 03:07:01.028104-04:00, 2025-05-20 03:07:01.028114-04:00, 4, 1, True, 2);
+INSERT INTO events_event VALUES (5, 'Quinceaños', 'CUmpleaños', 2025-06-11 04:20:00-04:00, 2025-06-12 00:00:00-04:00, 'scheduled', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fes.pinterest.com%2Fpin%2F453245150002120105%2F&psig=AOvVaw0gyEFvE--AUyo8uTFAsMEQ&ust=1748999917003000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCJCDr8eK1I0DFQAAAAAdAAAAABAE', 2025-06-02 21:18:50.295170-04:00, 2025-06-02 21:18:50.295177-04:00, 5, 1, True, 1);
+
+-- Table sales_notaventa
+CREATE TABLE IF NOT EXISTS sales_notaventa (
+  id bigint,
+  cliente_nombre character varying,
+  fecha timestamp with time zone,
+  total numeric,
+  administrador_id bigint
+);
+
+INSERT INTO sales_notaventa VALUES (1, 'FElipe', 2025-06-02 21:32:46.739552-04:00, 280.00, 12);
+
+-- Table sales_detallenotaventa
+CREATE TABLE IF NOT EXISTS sales_detallenotaventa (
+  id bigint,
+  cantidad integer,
+  precio_unitario numeric,
+  subtotal numeric,
+  servicio_id bigint,
+  nota_venta_id bigint
+);
+
+INSERT INTO sales_detallenotaventa VALUES (1, 1, 30.00, 30.00, 7, 1);
+INSERT INTO sales_detallenotaventa VALUES (2, 1, 100.00, 100.00, 9, 1);
+INSERT INTO sales_detallenotaventa VALUES (3, 1, 150.00, 150.00, 10, 1);
+
+-- Table staff
+CREATE TABLE IF NOT EXISTS staff (
+  id bigint,
+  full_name character varying,
+  identity_document character varying,
+  email character varying,
+  phone character varying,
+  address text,
+  birth_date date,
+  position character varying,
+  photo character varying,
+  hire_date date,
+  is_active boolean,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  company_id bigint
+);
+
+INSERT INTO staff VALUES (1, 'asd', '123', 'mel@gibson.com', '1234567', 'loquesea', 2005-02-02, 'catering', '', 2000-01-01, True, 2025-06-02 21:58:40.088074-04:00, 2025-06-02 22:01:41.215856-04:00, 1);
+
+-- Table tasks
+CREATE TABLE IF NOT EXISTS tasks (
+  id bigint,
+  title character varying,
+  description text,
+  start_datetime timestamp with time zone,
+  end_datetime timestamp with time zone,
+  status character varying,
+  notes text,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  company_id bigint,
+  event_id bigint
+);
+
+
+-- Table tasks_assigned_staff
+CREATE TABLE IF NOT EXISTS tasks_assigned_staff (
+  id bigint,
+  task_id bigint,
+  staff_id bigint
+);
+
+
+-- Table schedules_schedule
+CREATE TABLE IF NOT EXISTS schedules_schedule (
+  id bigint,
+  start_time time without time zone,
+  end_time time without time zone,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  company_id bigint,
+  event_id bigint
+);
+
+
+-- Table schedules_activity
+CREATE TABLE IF NOT EXISTS schedules_activity (
+  id bigint,
+  title character varying,
+  description text,
+  start_time time without time zone,
+  end_time time without time zone,
+  status character varying,
+  created_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  schedule_id bigint
+);
+
+

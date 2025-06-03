@@ -1,4 +1,4 @@
--- Backup de la base de datos creada el 2025-06-02 20:13:15.181229
+-- Backup de la base de datos creada el 2025-06-03 00:19:06.297640
 
 -- Table django_migrations
 CREATE TABLE IF NOT EXISTS django_migrations (
@@ -67,6 +67,7 @@ INSERT INTO django_migrations VALUES (56, 'events', '0003_event_is_package_event
 INSERT INTO django_migrations VALUES (57, 'sales', '0001_initial', 2025-06-02 20:12:13.576607-04:00);
 INSERT INTO django_migrations VALUES (58, 'staff', '0001_initial', 2025-06-02 20:12:13.602306-04:00);
 INSERT INTO django_migrations VALUES (59, 'tasks', '0001_initial', 2025-06-02 20:12:13.638328-04:00);
+INSERT INTO django_migrations VALUES (60, 'schedules', '0001_initial', 2025-06-02 23:58:19.320248-04:00);
 
 -- Table django_content_type
 CREATE TABLE IF NOT EXISTS django_content_type (
@@ -98,6 +99,8 @@ INSERT INTO django_content_type VALUES (20, 'sales', 'detallenotaventa');
 INSERT INTO django_content_type VALUES (21, 'sales', 'notaventa');
 INSERT INTO django_content_type VALUES (22, 'staff', 'staff');
 INSERT INTO django_content_type VALUES (23, 'tasks', 'task');
+INSERT INTO django_content_type VALUES (24, 'schedules', 'schedule');
+INSERT INTO django_content_type VALUES (25, 'schedules', 'activity');
 
 -- Table auth_permission
 CREATE TABLE IF NOT EXISTS auth_permission (
@@ -199,6 +202,14 @@ INSERT INTO auth_permission VALUES (89, 'Can add Tarea', 23, 'add_task');
 INSERT INTO auth_permission VALUES (90, 'Can change Tarea', 23, 'change_task');
 INSERT INTO auth_permission VALUES (91, 'Can delete Tarea', 23, 'delete_task');
 INSERT INTO auth_permission VALUES (92, 'Can view Tarea', 23, 'view_task');
+INSERT INTO auth_permission VALUES (93, 'Can add Cronograma', 24, 'add_schedule');
+INSERT INTO auth_permission VALUES (94, 'Can change Cronograma', 24, 'change_schedule');
+INSERT INTO auth_permission VALUES (95, 'Can delete Cronograma', 24, 'delete_schedule');
+INSERT INTO auth_permission VALUES (96, 'Can view Cronograma', 24, 'view_schedule');
+INSERT INTO auth_permission VALUES (97, 'Can add Actividad', 25, 'add_activity');
+INSERT INTO auth_permission VALUES (98, 'Can change Actividad', 25, 'change_activity');
+INSERT INTO auth_permission VALUES (99, 'Can delete Actividad', 25, 'delete_activity');
+INSERT INTO auth_permission VALUES (100, 'Can view Actividad', 25, 'view_activity');
 
 -- Table auth_group
 CREATE TABLE IF NOT EXISTS auth_group (
