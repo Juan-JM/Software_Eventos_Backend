@@ -33,7 +33,7 @@ class GenerateBackupView(APIView):
 
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         filename = f'backup_{timestamp}.sql'
-        backup_dir = os.path.join(settings.BASE_DIR, 'backups')
+        backup_dir = os.path.join(settings.MEDIA_ROOT, 'backups')
         os.makedirs(backup_dir, exist_ok=True)
         backup_path = os.path.join(backup_dir, filename)
 
