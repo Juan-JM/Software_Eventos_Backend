@@ -80,9 +80,9 @@ class EventSerializer(serializers.ModelSerializer):
 
             return data
   #  def validate(self, data):
-        """
+    """
         Validar que se proporcione package o services según el valor de is_package
-       """
+    """
    #     is_package = data.get('is_package', False)
         
     #    if is_package:

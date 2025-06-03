@@ -1,12 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import BackupViewSet, GenerateBackupViewSet
+from .views import BackupViewSet, GenerateBackupView
 
 router = DefaultRouter()
 router.register('', BackupViewSet, basename='backup')
 
 urlpatterns = [
-    path('generate/', GenerateBackupViewSet.as_view()),
+    path('generate/', GenerateBackupView.as_view()),
     path('', include(router.urls)),
 ]
 
