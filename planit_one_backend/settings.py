@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'backup',
     'packages',
     'sales',
-
+    'schedules',
     'staff',        # Nueva app
     'tasks',        # Nueva app
 ]
