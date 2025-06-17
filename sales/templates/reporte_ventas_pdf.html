@@ -1,0 +1,21 @@
+<h2>Reporte de Ventas</h2>
+<table border="1" cellspacing="0" cellpadding="4">
+  <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Correo</th>
+      <th>Fecha</th>
+      <th>Total (Bs)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for venta in ventas %}
+    <tr>
+      <td>{{ venta.cliente_nombre }}</td>
+      <td>{{ venta.correo_cliente }}</td>
+      <td>{{ venta.fecha|date:"Y-m-d" }}</td>
+      <td>{{ venta.total }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

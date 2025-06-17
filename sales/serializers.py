@@ -17,7 +17,7 @@ class NotaVentaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NotaVenta
-        fields = ['id', 'cliente_nombre', 'administrador', 'administrador_nombre', 'fecha', 'total', 'detalles']
+        fields = ['id', 'cliente_nombre', 'correo_cliente', 'administrador', 'administrador_nombre', 'fecha', 'total', 'detalles']
         read_only_fields = ['fecha', 'total', 'administrador']
 
     def create(self, validated_data):

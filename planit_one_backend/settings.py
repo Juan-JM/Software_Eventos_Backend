@@ -16,9 +16,8 @@ SECRET_KEY = 'django-insecure-$k0m&rnyf9wua_=@37aaouf3m9w5s)zu)*joz89glas47!_!&i
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app', '192.168.0.13']
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app', '192.168.0.13']
+#ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 # Configuración unificada de archivos media
 MEDIA_URL = '/media/'
@@ -28,8 +27,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 BACKUP_ROOT = os.path.join(MEDIA_ROOT, 'backups')
 STAFF_PHOTOS_ROOT = os.path.join(MEDIA_ROOT, 'staff_photos')
 
-# Application definition
+# Para enviar correos con las notas de ventas a cada cliente 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,6 +87,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'audit/templates'),
+            os.path.join(BASE_DIR, 'sales', 'templates'), # para las notas de ventas al correo
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -113,7 +122,6 @@ DATABASES ={
 #       'PORT': os.getenv('DB_PORT'),
 #   }
 # }
-
 
 # Configuración de CORS para permitir solicitudes desde el frontend
 CORS_ALLOW_ALL_ORIGINS = True  # En producción, limitar a dominios específicos
