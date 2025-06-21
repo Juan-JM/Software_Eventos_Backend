@@ -193,14 +193,14 @@ class StripeWebhookView(APIView):
                             end_date=end_date
                         )
                         
-                        print(f"✅ Suscripción creada correctamente: {subscription.id}")
+                        print(f" Suscripción creada correctamente: {subscription.id}")
                     else:
-                        print("⚠️ No se encontró ID de suscripción en la sesión de checkout")
+                        print(" No se encontró ID de suscripción en la sesión de checkout")
                     
                 except Company.DoesNotExist:
-                    print(f"❌ Empresa con ID {company_id} no encontrada")
+                    print(f" Empresa con ID {company_id} no encontrada")
                 except Exception as e:
-                    print(f"❌ Error al procesar suscripción: {str(e)}")
+                    print(f" Error al procesar suscripción: {str(e)}")
         
         elif event['type'] == 'invoice.payment_failed':
             # Manejar pago fallido
