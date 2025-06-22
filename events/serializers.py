@@ -71,7 +71,7 @@ class EventSerializer(serializers.ModelSerializer):
             'status','image',
             'attendee_count',    # ← usa el mismo nombre que en el modelo
             'created_at','updated_at','company',
-            'owner','owner_id','owner_data'
+            'owner','owner_id','owner_data',
             'id', 'name', 'description', 'start_date', 'end_date',
             'location', 'location_id',
             'is_package',  # Nuevo campo
