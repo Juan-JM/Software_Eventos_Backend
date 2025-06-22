@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-$k0m&rnyf9wua_=@37aaouf3m9w5s)zu)*joz89glas47!_!&i
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server', 'de1f-200-87-152-233.ngrok-free.app', '192.168.0.13']
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server_backend','softwareeventosbackend-production.up.railway.app'] //url Backend
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 
@@ -190,7 +190,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# CSRF_TRUSTED_ORIGINS=['http://*','https://softwareeventosbackend-production.up.railway.app']
+# CSRF_TRUSTED_ORIGINS=['http://*','https://softwareeventosbackend-production.up.railway.app'] //Url del Backend
 CSRF_TRUSTED_ORIGINS = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
     'http://localhost:3000,http://127.0.0.1:8000'
