@@ -2,6 +2,7 @@ from django.db import models
 from services.models import Service
 from locations.models import Location
 from companies.models import Company
+from users.models import User  
 from packages.models import Package
 
 class Event(models.Model):
@@ -26,10 +27,11 @@ class Event(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name='events', null=True, blank=True)
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='scheduled')
-    image = models.URLField(max_length=500, null=True, blank=True)  # URL en vez de archivo
+    image = models.URLField(max_length=500, null=True, blank=True)
+    attendee_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='events')
-
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="owned_events")
     def __str__(self):
         return self.name
