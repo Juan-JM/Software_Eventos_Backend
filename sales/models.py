@@ -5,6 +5,7 @@ from services.models import Service
 # Create your models here.
 class NotaVenta(models.Model):
     cliente_nombre = models.CharField(max_length=255)
+    correo_cliente = models.EmailField(null=True, blank=True)
     administrador = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notas_venta')
     fecha = models.DateTimeField(auto_now_add=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
