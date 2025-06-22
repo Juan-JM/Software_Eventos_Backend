@@ -28,8 +28,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 BACKUP_ROOT = os.path.join(MEDIA_ROOT, 'backups')
 STAFF_PHOTOS_ROOT = os.path.join(MEDIA_ROOT, 'staff_photos')
 
-# Application definition
+# Para enviar correos con las notas de ventas a cada cliente 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,6 +66,7 @@ INSTALLED_APPS = [
     'schedules',
     'staff',        # Nueva app
     'tasks',        # Nueva app
+    'providers',
 ]
 
 MIDDLEWARE = [
@@ -79,6 +89,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'audit/templates'),
+            os.path.join(BASE_DIR, 'sales', 'templates'), # para las notas de ventas al correo
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -113,7 +124,6 @@ DATABASES ={
 #       'PORT': os.getenv('DB_PORT'),
 #   }
 # }
-
 
 # Configuración de CORS para permitir solicitudes desde el frontend
 CORS_ALLOW_ALL_ORIGINS = True  # En producción, limitar a dominios específicos
