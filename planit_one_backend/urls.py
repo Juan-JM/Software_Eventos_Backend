@@ -27,5 +27,6 @@ urlpatterns = [
     path('api/staff/', include('staff.urls')),        # Nueva ruta
     path('api/providers/', include('providers.urls')),
     path('api/tasks/', include('tasks.urls')),        # Nueva ruta
+    path('api/invitations/', include('invitations.urls')),  # Nueva ruta
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
