@@ -20,7 +20,6 @@ DEBUG = True
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server_backend','softwareeventosbackend-production.up.railway.app'] //url Backend
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(',')
 
-
 # Configuración unificada de archivos media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
