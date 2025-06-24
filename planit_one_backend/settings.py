@@ -20,6 +20,7 @@ DEBUG = True
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server_backend','softwareeventosbackend-production.up.railway.app'] //url Backend
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(',')
 
+
 # Configuración unificada de archivos media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -116,8 +117,17 @@ WSGI_APPLICATION = 'planit_one_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 #Servidor Railway
-DATABASES ={
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+# DATABASES ={
+#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+# }
+
+#Servidor Render
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,  # Reutilizar conexiones por 10 minutos
+        conn_health_checks=True,  # Verificar salud de conexiones
+    )
 }
 
 # DATABASES = {
@@ -216,3 +226,7 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
 STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', '')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
 STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
+
+import gc
+gc.set_threshold(700, 10, 10)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
