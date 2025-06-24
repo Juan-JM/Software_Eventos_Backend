@@ -165,13 +165,51 @@ class Invitation(models.Model):
         self.save()
     
     def send_invitation(self):
-        """Marca la invitación como enviada"""
+        """Marca la invitación como enviada y envía el email"""
         from django.utils import timezone
+        
+        print(f"🚀 === ENVIANDO INVITACIÓN ===")
+        print(f"👤 Invitado: {self.guest_name}")
+        print(f"📧 Email: {self.guest_email}")
+        print(f"🎪 Evento: {self.event.name}")
+        print(f"🏢 Empresa: {self.organizing_company}")
+        
+        # ✅ MANTENER TODA LA FUNCIONALIDAD EXISTENTE
+        old_status = self.status
         self.status = 'enviada'
         self.sent_at = timezone.now()
+        
+        # Generar token si no existe
         if not self.confirmation_token:
             self.generate_confirmation_token()
+        
+        # Guardar cambios en la base de datos
         self.save()
+        print(f"✅ Estado cambiado de '{old_status}' a 'enviada'")
+        
+        # 🆕 NUEVA FUNCIONALIDAD: ENVIAR EMAIL
+        try:
+            from .email_service import send_invitation_email
+            
+            email_sent = send_invitation_email(self)
+            
+            if email_sent:
+                print(f"✅ Email enviado exitosamente a {self.guest_email}")
+            else:
+                print(f"❌ Error enviando email a {self.guest_email}")
+                # NOTA: No revertimos el estado porque la invitación SÍ se envió en el sistema
+            
+            return email_sent
+            
+        except ImportError:
+            # Si no existe el servicio de email, seguir funcionando normal
+            print("⚠️ Servicio de email no disponible, pero invitación marcada como enviada")
+            return True
+            
+        except Exception as e:
+            print(f"💥 Excepción enviando email: {str(e)}")
+            # NOTA: Invitación sigue marcada como enviada aunque falle el email
+            return False
     
     def get_occupied_seats_for_event(self):
         """Obtiene todos los asientos ocupados para este evento"""
