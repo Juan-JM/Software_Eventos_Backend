@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'staff',        # Nueva app
     'tasks',        # Nueva app
     'providers',
+    'invitations',
 ]
 
 MIDDLEWARE = [
