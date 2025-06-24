@@ -39,6 +39,11 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# ✅ AGREGAR SOLO ESTAS 3 LÍNEAS NUEVAS:
+EMAIL_USE_SSL = False  # Usar TLS en lugar de SSL
+EMAIL_TIMEOUT = 30     # Timeout para emails
+EMAIL_USE_LOCALTIME = True  # Usar timezone local
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
