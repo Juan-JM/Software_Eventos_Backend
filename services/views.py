@@ -1,3 +1,4 @@
+#services/view.py
 from rest_framework import viewsets, permissions
 from .models import Service
 from .serializers import ServiceSerializer
@@ -20,3 +21,8 @@ class ServiceViewSet(AuditModelMixin, viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(company=self.request.user.company)
         # super().perform_create(serializer)
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superadmin():
+            return Service.objects.select_related('provider', 'company').all()
+        return Service.objects.select_related('provider', 'company').filter(company=user.company)

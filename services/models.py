@@ -1,5 +1,8 @@
+#services/models.py
 from django.db import models
 from companies.models import Company 
+from providers.models import Provider 
+
 class Service(models.Model):
     UNIT_CHOICES = (
         ('event', 'Por Evento'),
@@ -14,7 +17,7 @@ class Service(models.Model):
     base_price = models.DecimalField(max_digits=10, decimal_places=2)
     unit_measure = models.CharField(max_length=10, choices=UNIT_CHOICES, default='event')
     standard_duration = models.PositiveIntegerField(blank=True, null=True, help_text="Duración en minutos (si aplica)")
-    provider = models.CharField(max_length=100)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name='services', help_text="Proveedor asignado al servicio")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

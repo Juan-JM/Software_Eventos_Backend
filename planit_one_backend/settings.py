@@ -1,3 +1,4 @@
+#planit_one_backend/settings.py
 import os
 import dj_database_url
 from dotenv import load_dotenv
@@ -17,7 +18,7 @@ SECRET_KEY = 'django-insecure-$k0m&rnyf9wua_=@37aaouf3m9w5s)zu)*joz89glas47!_!&i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'url_server_backend','softwareeventosbackend-production.up.railway.app'] //url Backend
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 
 # Configuración unificada de archivos media
