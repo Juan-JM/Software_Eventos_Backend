@@ -14,7 +14,7 @@ import dj_database_url
 # Create your views here.
 class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.user_type == 'admin'
+        return request.user.is_authenticated and request.user.user_type == 'admin' or 'superadmin'
 
 class BackupViewSet(AuditModelMixin, viewsets.ModelViewSet):
     queryset = Backup.objects.all().order_by('-created_at')
